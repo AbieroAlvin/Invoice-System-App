@@ -14,9 +14,9 @@ type InvoiceResponse2 = {
   error: any;
 };
 
-export const getAllInvoices = async (
+export async function getAllInvoices(
   status: "all" | "pending" | "draft" | "paid" = "all"
-): Promise<InvoiceResponse2> => {
+): Promise<InvoiceResponse2> {
   let query = supabase.from("invoice").select(`
     *,
     senderAdd (*),
@@ -36,9 +36,9 @@ export const getAllInvoices = async (
   }
 
   return { data, error };
-};
+}
 
-export const getInvoiceById = async (id: string): Promise<InvoiceResponse2> => {
+export async function getInvoiceById(id: string): Promise<InvoiceResponse2> {
   const { data, error } = await supabase
     .from("invoice")
     .select(
@@ -57,9 +57,9 @@ export const getInvoiceById = async (id: string): Promise<InvoiceResponse2> => {
   }
 
   return { data, error };
-};
+}
 
-export const createItemRow = async (item: ItemProps) => {
+export async function createItemRow(item: ItemProps) {
   const { data, error } = await supabase.from("items").insert([item]).select();
 
   if (error) {
@@ -68,9 +68,9 @@ export const createItemRow = async (item: ItemProps) => {
   }
 
   return { data, error };
-};
+}
 
-export const createInvoiceRow = async (invoice: CreateInvoiceProps) => {
+export async function createInvoiceRow(invoice: CreateInvoiceProps) {
   const { data, error } = await supabase
     .from("invoice")
     .insert([invoice])
@@ -82,9 +82,9 @@ export const createInvoiceRow = async (invoice: CreateInvoiceProps) => {
   }
 
   return { data, error };
-};
+}
 
-export const createClientAddressRow = async (address: ClientAddressProps) => {
+export async function createClientAddressRow(address: ClientAddressProps) {
   const { data, error } = await supabase
     .from("clientAddress")
     .insert([address])
@@ -96,9 +96,9 @@ export const createClientAddressRow = async (address: ClientAddressProps) => {
   }
 
   return { data, error };
-};
+}
 
-export const createSenderAddressRow = async (address: SenderAddressProps) => {
+export async function createSenderAddressRow(address: SenderAddressProps) {
   const { data, error } = await supabase
     .from("senderAdd")
     .insert([address])
@@ -110,9 +110,9 @@ export const createSenderAddressRow = async (address: SenderAddressProps) => {
   }
 
   return { data, error };
-};
+}
 
-export const createItemsRow = async (items: ItemProps) => {
+export async function createItemsRow(items: ItemProps) {
   const { data, error } = await supabase.from("items").insert([items]).select();
 
   if (error) {
@@ -121,12 +121,12 @@ export const createItemsRow = async (items: ItemProps) => {
   }
 
   return { data, error };
-};
+}
 
-export const updateInvoiceRows = async (
+export async function updateInvoiceRows(
   invoice: CreateInvoiceProps,
   invoiceId: string
-) => {
+) {
   const { data, error } = await supabase
     .from("invoice")
     .update({
@@ -150,12 +150,12 @@ export const updateInvoiceRows = async (
   }
 
   return { data, error };
-};
+}
 
-export const updateClientAddress = async (
+export async function updateClientAddress(
   address: ClientAddressProps,
   id: number
-) => {
+) {
   const { data, error } = await supabase
     .from("clientAddress")
     .update({
@@ -175,12 +175,11 @@ export const updateClientAddress = async (
   }
 
   return { data, error };
-};
-
-export const updateSenderAddress = async (
+}
+export async function updateSenderAddress(
   address: SenderAddressProps,
   id: number
-) => {
+) {
   const { data, error } = await supabase
     .from("senderAdd")
     .update({
@@ -200,9 +199,8 @@ export const updateSenderAddress = async (
   }
 
   return { data, error };
-};
-
-export const updateItemsRow = async (item: ItemProps, id: number) => {
+}
+export async function updateItemsRow(item: ItemProps, id: number) {
   const { data, error } = await supabase
     .from("items")
     .upsert({
@@ -222,45 +220,42 @@ export const updateItemsRow = async (item: ItemProps, id: number) => {
   }
 
   return { data, error };
-};
+}
 
-export const deleteItemsRow = async (id: number) => {
+export async function deleteItemsRow(id: number) {
   const { error } = await supabase.from("items").delete().eq("id", id);
 
   if (error) {
     console.error(error);
     throw new Error(`Could not delete item`);
   }
-};
-
-export const deleteSenderRow = async (id: number) => {
+}
+export async function deleteSenderRow(id: number) {
   const { error } = await supabase.from("senderAdd").delete().eq("id", id);
 
   if (error) {
     console.error(error);
     throw new Error(`Could not delete item`);
   }
-};
-
-export const deleteClientRow = async (id: number) => {
+}
+export async function deleteClientRow(id: number) {
   const { error } = await supabase.from("clientAddress").delete().eq("id", id);
 
   if (error) {
     console.error(error);
     throw new Error(`Could not delete item`);
   }
-};
-
-export const deleteInvoiceRow = async (id: number) => {
+}
+export async function deleteInvoiceRow(id: number) {
   const { error } = await supabase.from("invoice").delete().eq("idd", id);
 
   if (error) {
     console.error(error);
     throw new Error(`Could not delete item`);
   }
-};
+}
 
-export const toggleStatus = async (id: string) => {
+export async function toggleStatus(id: string) {
   const { data, error } = await supabase
     .from("invoice")
     .update({ status: "paid" })
@@ -273,9 +268,9 @@ export const toggleStatus = async (id: string) => {
   }
 
   return { data, error };
-};
+}
 
-export const generateRandomId = () => {
+export function generateRandomId() {
   const uppercaseLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
   const randomNumber = Math.floor(1000 + Math.random() * 9000);
   const randomUppercaseLetter1 = uppercaseLetters.charAt(
@@ -288,10 +283,10 @@ export const generateRandomId = () => {
   const randomId = `${randomUppercaseLetter1}${randomUppercaseLetter2}${randomNumber}`;
 
   return randomId;
-};
+}
 
-export const getPaymentDue = (createdAt: string, paymentTerms: number) => {
+export function getPaymentDue(createdAt: string, paymentTerms: number) {
   const paymentDueDate = addDays(createdAt, paymentTerms);
   const formattedPaymentDueDate = format(paymentDueDate, "yyyy-MM-dd");
   return formattedPaymentDueDate;
-};
+}
