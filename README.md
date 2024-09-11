@@ -27,8 +27,8 @@ Users should be able to:
 
 ### Links
 
-- Solution URL: [https://github.com/Olatoyan/invoice-system-app](https://github.com/Olatoyan/invoice-app)
-- Live Site URL: [https://toyan-invoice-app.netlify.app/](https://toyan-invoice-app.netlify.app/)
+- Solution URL: 
+- Live Site URL: 
 
 ## My process
 
